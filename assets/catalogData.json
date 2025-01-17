@@ -17,8 +17,7 @@
       "assets/images/01/01_2_2.jpg",
       "assets/images/01/01_2_3.jpg",
       "assets/images/01/01_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 2,
@@ -36,8 +35,7 @@
       "assets/images/02/02_2_2.jpg",
       "assets/images/02/02_2_3.jpg",
       "assets/images/02/02_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 3,
@@ -59,8 +57,7 @@
       "assets/images/03/03_2_2.jpg",
       "assets/images/03/03_2_3.jpg",
       "assets/images/03/03_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 4,
@@ -80,8 +77,7 @@
       "assets/images/04/04_2_2.jpg",
       "assets/images/04/04_2_3.jpg",
       "assets/images/04/04_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 5,
@@ -99,8 +95,7 @@
       "assets/images/05/05_2_2.jpg",
       "assets/images/05/05_2_3.jpg",
       "assets/images/05/05_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 6,
@@ -122,8 +117,7 @@
       "assets/images/06/06_2_2.jpg",
       "assets/images/06/06_2_3.jpg",
       "assets/images/06/06_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 7,
@@ -141,8 +135,7 @@
       "assets/images/07/07_2_2.jpg",
       "assets/images/07/07_2_3.jpg",
       "assets/images/07/07_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 8,
@@ -159,8 +152,7 @@
       "assets/images/08/08_2_2.jpg",
       "assets/images/08/08_2_3.jpg",
       "assets/images/08/08_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 9,
@@ -177,8 +169,7 @@
       "assets/images/09/09_2_2.jpg",
       "assets/images/09/09_2_3.jpg",
       "assets/images/09/09_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 10,
@@ -192,8 +183,7 @@
       "assets/images/10/10_2_2.jpg",
       "assets/images/10/10_2_3.jpg",
       "assets/images/10/10_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 11,
@@ -211,8 +201,7 @@
       "assets/images/11/11_2_2.jpg",
       "assets/images/11/11_2_3.jpg",
       "assets/images/11/11_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 12,
@@ -230,8 +219,7 @@
       "assets/images/12/12_2_2.jpg",
       "assets/images/12/12_2_3.jpg",
       "assets/images/12/12_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 13,
@@ -251,8 +239,7 @@
       "assets/images/13/13_2_2.jpg",
       "assets/images/13/13_2_3.jpg",
       "assets/images/13/13_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 14,
@@ -269,8 +256,7 @@
       "assets/images/14/14_2_2.jpg",
       "assets/images/14/14_2_3.jpg",
       "assets/images/14/14_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 15,
@@ -288,8 +274,7 @@
       "assets/images/15/15_2_2.jpg",
       "assets/images/15/15_2_3.jpg",
       "assets/images/15/15_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 16,
@@ -307,8 +292,7 @@
       "assets/images/16/16_2_2.jpg",
       "assets/images/16/16_2_3.jpg",
       "assets/images/16/16_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 17,
@@ -326,8 +310,7 @@
       "assets/images/17/17_2_2.jpg",
       "assets/images/17/17_2_3.jpg",
       "assets/images/17/17_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 18,
@@ -344,8 +327,7 @@
       "assets/images/18/18_2_2.jpg",
       "assets/images/18/18_2_3.jpg",
       "assets/images/18/18_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 19,
@@ -363,8 +345,7 @@
       "assets/images/19/19_2_2.jpg",
       "assets/images/19/19_2_3.jpg",
       "assets/images/19/19_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 20,
@@ -392,8 +373,7 @@
       "assets/images/20/20_2_2.jpg",
       "assets/images/20/20_2_3.jpg",
       "assets/images/20/20_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 21,
@@ -410,8 +390,7 @@
       "assets/images/21/21_2_2.jpg",
       "assets/images/21/21_2_3.jpg",
       "assets/images/21/21_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 22,
@@ -426,8 +405,7 @@
       "assets/images/22/22_2_2.jpg",
       "assets/images/22/22_2_3.jpg",
       "assets/images/22/22_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 23,
@@ -447,8 +425,7 @@
       "assets/images/23/23_2_2.jpg",
       "assets/images/23/23_2_3.jpg",
       "assets/images/23/23_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 24,
@@ -469,8 +446,7 @@
       "assets/images/24/24_2_2.jpg",
       "assets/images/24/24_2_3.jpg",
       "assets/images/24/24_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 25,
@@ -485,8 +461,7 @@
       "assets/images/25/25_2_2.jpg",
       "assets/images/25/25_2_3.jpg",
       "assets/images/25/25_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 26,
@@ -504,8 +479,7 @@
       "assets/images/26/26_2_2.jpg",
       "assets/images/26/26_2_3.jpg",
       "assets/images/26/26_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 27,
@@ -520,8 +494,7 @@
       "assets/images/27/27_2_2.jpg",
       "assets/images/27/27_2_3.jpg",
       "assets/images/27/27_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 28,
@@ -540,8 +513,7 @@
       "assets/images/24/24_2_2.jpg",
       "assets/images/24/24_2_3.jpg",
       "assets/images/24/24_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 29,
@@ -558,8 +530,7 @@
       "assets/images/29/29_2_2.jpg",
       "assets/images/29/29_2_3.jpg",
       "assets/images/29/29_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   },
   {
     "id": 30,
@@ -575,7 +546,6 @@
       "assets/images/30/30_2_2.jpg",
       "assets/images/30/30_2_3.jpg",
       "assets/images/30/30_3_1.jpg"
-    ],
-    "description": "This is the description for Product."
+    ]
   }
 ]

@@ -107,8 +107,8 @@ main {
   align-items: center;
   gap: 10px;
   border-radius: 8px;
-  width: 80%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -129,23 +129,36 @@ main {
 }
 
 /* Галерея изображений */
-.modal-gallery {
+/* .modal-gallery {
   display: flex;
   flex-direction: row;
   gap: 10px;
   overflow-x: auto;
   padding-bottom: 10px;
   width: 100%;
+} */
+.modal-gallery {
+  display: flex;
+  justify-content: center; /* Центрируем галерею */
+  gap: 5px; /* Расстояние между изображениями */
+  flex-wrap: wrap; /* Перенос изображений на новую строку, если не помещаются */
+  padding: 5px 0; /* Отступы сверху и снизу */
 }
 
-.modal-gallery img {
+/* .modal-gallery img {
   width: auto;
   height: 15vh;
   cursor: pointer;
+} */
+.modal-gallery img {
+  width: auto;
+  height: 5vh; /* Высота миниатюр */
+  cursor: pointer;
+  object-fit: contain; /* Сохраняем пропорции изображений */
 }
 
 .modal-description {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .modal-close {
@@ -183,7 +196,7 @@ main {
 }
 
 /* Стили для скроллбара */
-.modal-gallery::-webkit-scrollbar {
+/* .modal-gallery::-webkit-scrollbar {
   height: 8px;
 }
 
@@ -198,7 +211,7 @@ main {
 
 .modal-gallery::-webkit-scrollbar-track {
   background: #f1f1f1;
-}
+} */
 
 /* Адаптивная сетка каталога */
 @media (max-width: 768px) {
@@ -246,4 +259,31 @@ main {
 .footer:hover {
   color: #c8ad71;
   text-decoration: none;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  font-size: 15px;
+  padding: 5px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.left-arrow {
+  left: 20px;
+}
+
+.right-arrow {
+  right: 20px;
+}
+
+.arrow:hover {
+  background: grey;
+  color: #fff;
 }

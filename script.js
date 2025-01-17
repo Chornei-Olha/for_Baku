@@ -32,26 +32,47 @@ function renderCatalog(items) {
 }
 
 // Открытие модального окна с фото
+let currentImageIndex = 0;
+
 function openModal(id) {
   const item = catalogData.find((i) => i.id === id);
   const gallery = document.getElementById("gallery");
   const mainImage = document.getElementById("mainImage");
   const description = document.getElementById("description");
 
-  mainImage.src = item.images[0];
-  mainImage.onclick = () => openFullscreen(mainImage); // Полноэкранный режим
-  gallery.innerHTML = "";
+  currentImageIndex = 0; // Сбрасываем индекс при открытии модального окна
+  mainImage.src = item.images[currentImageIndex];
+  mainImage.onclick = () => openFullscreen(mainImage);
   description.textContent = item.description;
 
-  item.images.forEach((src) => {
+  gallery.innerHTML = "";
+  item.images.forEach((src, index) => {
     const img = document.createElement("img");
     img.src = src;
     img.onclick = () => {
+      currentImageIndex = index;
       mainImage.src = src;
-      mainImage.onclick = () => openFullscreen(mainImage); // Обновляем событие для нового изображения
+      mainImage.onclick = () => openFullscreen(mainImage);
     };
     gallery.appendChild(img);
   });
+
+  // Добавляем обработчики для стрелок
+  const prevArrow = document.getElementById("prevArrow");
+  const nextArrow = document.getElementById("nextArrow");
+
+  prevArrow.onclick = () => {
+    currentImageIndex =
+      (currentImageIndex - 1 + item.images.length) % item.images.length;
+    mainImage.src = item.images[currentImageIndex];
+    mainImage.onclick = () => openFullscreen(mainImage);
+  };
+
+  nextArrow.onclick = () => {
+    currentImageIndex = (currentImageIndex + 1) % item.images.length;
+    mainImage.src = item.images[currentImageIndex];
+    mainImage.onclick = () => openFullscreen(mainImage);
+  };
 
   document.getElementById("modal").style.display = "flex";
 }
