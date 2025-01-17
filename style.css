@@ -4,7 +4,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #dbdada;
+  background-color: #f7f1ef;
 }
 
 /* Общие стили */
@@ -48,6 +48,7 @@ main {
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
   margin-bottom: 50px;
+  margin-top: 50px;
 }
 
 /* Карточки каталога */
@@ -72,7 +73,7 @@ main {
 }
 
 .catalog-item button {
-  background: grey;
+  background: #30222d;
   color: white;
   border: none;
   padding: 10px;
@@ -82,7 +83,7 @@ main {
 }
 
 .catalog-item button:hover {
-  background: #30222d;
+  background: rgba(47, 32, 44, 0.735);
 }
 
 /* Модалка */
@@ -99,7 +100,7 @@ main {
 }
 
 .modal-content {
-  background: grey;
+  background: #f7f1ef;
   padding: 10px;
   display: flex;
   flex-direction: column;
