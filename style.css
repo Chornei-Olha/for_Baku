@@ -8,13 +8,14 @@ body {
 
 /* Общие стили */
 header {
-  background: #0a4a39;
-  padding: 30px 0;
+  background: #fff;
+  padding: 20px 0;
   text-align: center;
+  border-bottom: 2px solid #171717;
 }
 
 footer {
-  background: #0a4a39;
+  background: #171717;
   color: #fff;
   text-align: center;
   padding: 20px 0;
@@ -50,7 +51,7 @@ main {
 
 /* Карточки каталога */
 .catalog-item {
-  border: 1px solid grey;
+  border: 1px solid #c8ad71;
   text-align: center;
   padding-top: 5px;
   padding-left: 5px;
@@ -73,7 +74,7 @@ main {
 }
 
 .catalog-item button:hover {
-  background: #0a4a39;
+  background: #c8ad71;
 }
 
 /* Модалка */
@@ -143,7 +144,7 @@ main {
   top: 10px;
   right: 10px;
   cursor: pointer;
-  background: #ff0000;
+  background: #c8ad71;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -230,5 +231,10 @@ main {
 
 .footer {
   color: #fff;
+  text-decoration: none;
+}
+
+.footer:hover {
+  color: #c8ad71;
   text-decoration: none;
 }

@@ -10,6 +10,7 @@ async function loadCatalogData() {
     const data = await response.json(); // Преобразование данных в формат JavaScript
     catalogData = data; // Сохраняем данные в переменную
     renderCatalog(data); // Вызов функции для отображения каталога
+    createFilterButtons(); // Создаем кнопки фильтрации после загрузки данных
   } catch (error) {
     console.error("Ошибка загрузки данных:", error);
   }
@@ -74,10 +75,37 @@ function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
 
-// Фильтрация каталога по типу
+// Функция для фильтрации каталога
 function filterCatalog(type) {
-  const filtered = catalogData.filter((item) => item.type === type);
-  renderCatalog(filtered);
+  if (type === "all") {
+    renderCatalog(catalogData); // Показываем все элементы
+  } else {
+    const filtered = catalogData.filter((item) => item.type === type);
+    renderCatalog(filtered);
+  }
+}
+
+// Создание кнопок фильтрации
+function createFilterButtons() {
+  const filterContainer = document.getElementById("filter-buttons");
+  filterContainer.innerHTML = ""; // Очищаем контейнер перед добавлением кнопок
+
+  // Кнопка "Показать все"
+  const showAllButton = document.createElement("button");
+  showAllButton.textContent = "Показать все";
+  showAllButton.className = "sort-button";
+  showAllButton.onclick = () => filterCatalog("all");
+  filterContainer.appendChild(showAllButton);
+
+  // Пример других кнопок (замените массив types реальными типами из JSON)
+  const types = [...new Set(catalogData.map((item) => item.type))]; // Уникальные типы
+  types.forEach((type) => {
+    const button = document.createElement("button");
+    button.textContent = type;
+    button.className = "sort-button";
+    button.onclick = () => filterCatalog(type);
+    filterContainer.appendChild(button);
+  });
 }
 
 // Инициализация каталога
