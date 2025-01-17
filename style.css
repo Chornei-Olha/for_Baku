@@ -4,6 +4,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: #dbdada;
 }
 
 /* Общие стили */
@@ -11,11 +12,11 @@ header {
   background: #fff;
   padding: 0px 0px 5px 0px;
   text-align: center;
-  border-bottom: 2px solid #171717;
+  border-bottom: 2px solid #30222d;
 }
 
 footer {
-  background: #171717;
+  background: #30222d;
   color: #fff;
   text-align: center;
   padding: 20px 0;
@@ -45,22 +46,29 @@ main {
 .catalog {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  gap: 20px;
   margin-bottom: 50px;
 }
 
 /* Карточки каталога */
 .catalog-item {
-  border: 1px solid #c8ad71;
+  border: 1px solid #30222d;
   text-align: center;
-  padding-top: 1px;
-  min-height: 500px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 400px; /* Все блоки одинаковой высоты */
+  overflow: hidden; /* Чтобы ничего не выходило за границы */
 }
 
 .catalog-item img {
-  max-width: 100%;
-  object-fit: cover;
-  object-position: center;
+  width: 100%; /* Растягиваем на всю ширину */
+  height: calc(
+    100% - 35px
+  ); /* Оставляем место под кнопку (40px кнопка + 1px расстояние) */
+  object-fit: cover; /* Обрезаем лишнее, сохраняя пропорции */
+  object-position: center; /* Центруем изображение внутри контейнера */
 }
 
 .catalog-item button {
@@ -68,12 +76,13 @@ main {
   color: white;
   border: none;
   padding: 10px;
+  width: 100%; /* Занимает всю ширину блока */
   cursor: pointer;
-  border-radius: 4px;
+  margin-top: 1px; /* Расстояние между картинкой и кнопкой */
 }
 
 .catalog-item button:hover {
-  background: #c8ad71;
+  background: #30222d;
 }
 
 /* Модалка */
@@ -143,7 +152,7 @@ main {
   top: 10px;
   right: 10px;
   cursor: pointer;
-  background: #c8ad71;
+  background: grey;
   color: #fff;
   border: none;
   padding: 5px 10px;
@@ -169,15 +178,6 @@ main {
 
   .modal-gallery img {
     max-width: 200px;
-  }
-
-  .catalog-item {
-    border: 1px solid #c8ad71;
-    text-align: center;
-    padding-top: 1px;
-    padding-left: 1px;
-    padding-right: 1px;
-    min-height: 350px;
   }
 }
 

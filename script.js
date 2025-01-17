@@ -25,7 +25,6 @@ function renderCatalog(items) {
     div.className = "catalog-item";
     div.innerHTML = `
       <img src="${item.images[0]}" alt="${item.name}">
-      <p>${item.name}</p>
       <button onclick="openModal(${item.id})">Подробнее</button>
     `;
     catalog.appendChild(div);
