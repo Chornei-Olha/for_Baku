@@ -128,5 +128,52 @@ function createFilterButtons() {
   });
 }
 
+// Переменные для работы с жестами
+let scale = 1; // Текущий масштаб
+let startScale = 1; // Начальный масштаб при начале жеста
+let initialDistance = null; // Расстояние между пальцами
+
+// Функция для обработки зума
+function handleGestureStart(e) {
+  if (e.touches && e.touches.length === 2) {
+    // Начало мультитач жеста
+    initialDistance = getDistance(e.touches[0], e.touches[1]);
+    startScale = scale;
+  }
+}
+
+function handleGestureMove(e) {
+  if (e.touches && e.touches.length === 2) {
+    e.preventDefault(); // Отключаем стандартное поведение
+    const currentDistance = getDistance(e.touches[0], e.touches[1]);
+    const scaleFactor = currentDistance / initialDistance;
+
+    scale = Math.min(Math.max(startScale * scaleFactor, 1), 3); // Ограничиваем масштаб от 1 до 3
+    const mainImage = document.getElementById("mainImage");
+    mainImage.style.transform = `scale(${scale})`;
+  }
+}
+
+function handleGestureEnd() {
+  // Сбрасываем параметры жеста после завершения
+  initialDistance = null;
+}
+
+// Функция для вычисления расстояния между двумя точками (пальцами)
+function getDistance(point1, point2) {
+  const dx = point2.clientX - point1.clientX;
+  const dy = point2.clientY - point1.clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+// Добавление обработчиков событий для жестов
+const mainImage = document.getElementById("mainImage");
+mainImage.addEventListener("touchstart", handleGestureStart, {
+  passive: false,
+});
+mainImage.addEventListener("touchmove", handleGestureMove, { passive: false });
+mainImage.addEventListener("touchend", handleGestureEnd);
+mainImage.addEventListener("touchcancel", handleGestureEnd);
+
 // Инициализация каталога
 loadCatalogData(); // Загружаем данные из JSON при старте страницы
