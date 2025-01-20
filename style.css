@@ -116,32 +116,48 @@ main {
 }
 
 /* Основное изображение */
+
 .modal-main-image-container {
-  width: 80%;
-  height: 70%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 50px;
 }
 
 .modal-main-image {
   max-height: 100%;
   max-width: 100%;
+
   object-fit: contain;
   cursor: pointer;
-  transition: transform 0.3s ease; /* Для плавности зума */
-  touch-action: none;
+  transition: transform 0.3s ease;
+  touch-action: none; /* Отключаем стандартное поведение для изображений */
+  transform-origin: center center;
+}
+
+/* Для десктопа */
+@media (min-width: 1024px) {
+  .modal-main-image-container {
+    width: 80%;
+    height: 80%;
+  }
+
+  .modal-main-image {
+    transition: transform 0.3s ease-out;
+  }
+}
+
+/* Убираем избыточные эффекты на мобилках */
+@media (max-width: 768px) {
+  .modal-main-image-container {
+    height: 70%; /* Высота контейнера на мобильных устройствах */
+  }
 }
 
 /* Галерея изображений */
-/* .modal-gallery {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  overflow-x: auto;
-  padding-bottom: 10px;
-  width: 100%;
-} */
+
 .modal-gallery {
   display: flex;
   justify-content: center; /* Центрируем галерею */
@@ -150,11 +166,6 @@ main {
   padding: 5px 0; /* Отступы сверху и снизу */
 }
 
-/* .modal-gallery img {
-  width: auto;
-  height: 15vh;
-  cursor: pointer;
-} */
 .modal-gallery img {
   width: auto;
   height: 5vh; /* Высота миниатюр */
@@ -246,7 +257,7 @@ main {
 .video-container {
   display: flex;
   flex-direction: column;
-  gap: 70px;
+  gap: 50px;
   text-align: center;
   align-items: center;
 }

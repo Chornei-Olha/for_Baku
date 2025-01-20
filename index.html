@@ -2,13 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-    />
-
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <title>Catalog Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catalog Allstone</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -17,25 +12,26 @@
     </header>
 
     <main>
-      <!-- Кнопки для фильтрации -->
-      <!-- <div id="filter-buttons" class="sort-buttons">
-      </div> -->
-
-      <!-- Каталог -->
-      <section class="catalog" id="catalog">
-        <!-- Данные каталога будут загружены через JavaScript -->
-      </section>
-
-      <!-- Раздел с видео -->
+      <section class="catalog" id="catalog"></section>
       <section class="video-section">
         <h2>Видео обзоры</h2>
         <div class="video-container">
           <video class="video" controls playsinline>
             <source src="assets/videos/video1.mp4" type="video/mp4" />
+            <button class="fullscreen-btn">Fullscreen</button>
+            <!-- Кнопка для полноэкранного режима -->
           </video>
-          <video class="video" controls playsinline>
-            <source src="" type="video/mp4" />
-          </video>
+          <button
+            class="youtube-btn"
+            data-link="https://youtu.be/A-7bVwXTQdE"
+            onclick="openYouTube(this)"
+          >
+            Обзор...
+          </button>
+
+          <!-- <video class="video" controls playsinline>
+            <source src="assets/videos/video2.mp4" type="video/mp4" />
+          </video> -->
         </div>
       </section>
     </main>
@@ -45,30 +41,16 @@
       <p><a href="tel:+994504350010" class="footer">+994 (50) 435-00-10</a></p>
     </footer>
 
-    <!-- Модальное окно -->
     <div id="modal" class="modal">
       <div class="modal-content">
         <button id="prevArrow" class="arrow left-arrow"><</button>
-
-        <!-- Основное изображение -->
         <div class="modal-main-image-container">
-          <img
-            id="mainImage"
-            class="modal-main-image"
-            src=""
-            alt="Основное изображение"
-          />
+          <img id="mainImage" class="modal-main-image" src="" alt="" />
         </div>
         <button id="nextArrow" class="arrow right-arrow">></button>
-
-        <!-- Галерея изображений -->
         <div id="gallery" class="modal-gallery"></div>
-        <!-- Описание -->
         <p id="description" class="modal-description"></p>
-        <!-- Кнопка закрытия -->
-        <button id="closeModal" class="modal-close" onclick="closeModal()">
-          ×
-        </button>
+        <button id="closeModal" class="modal-close">×</button>
       </div>
     </div>
 
