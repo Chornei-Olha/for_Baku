@@ -34,17 +34,10 @@ function renderCatalog(items) {
 let currentImageIndex = 0;
 let currentItemImages = []; // Хранение изображений текущего элемента
 
-let isFullscreen = false;
-let touchStartX = 0;
-let touchEndX = 0;
-let initialDistance = 0;
-let currentScale = 1;
-let isPinch = false;
-let isDragging = false;
-let dragStartX = 0;
-let dragStartY = 0;
-let dragOffsetX = 0;
-let dragOffsetY = 0;
+let isFullscreen = false; // Флаг полноэкранного режима
+let zoomLevel = 1; // Уровень увеличения изображения
+let lens = document.getElementById("zoomLens"); // Лупа
+let zoomedImage = null;
 
 // Открытие модалки
 function openModal(id) {
@@ -84,24 +77,32 @@ function openModal(id) {
   document.getElementById("nextArrow").onclick = () =>
     changeImage(1, item.images);
 
-  // Настроим жесты для свайпов и двойного нажатия
+  // Настроим жесты для свайпов
   setupImageGestures(mainImage, item.images);
 
-  // Добавляем поддержку полноэкранного режима
+  // Добавляем обработчик для перехода в полноэкранный режим
   mainImage.addEventListener("dblclick", toggleFullscreen);
-  document.addEventListener("keydown", handleKeyboard); // Обработчик клавиш
 
-  // Добавляем обработчик для пинча
-  setupPinchToZoom(mainImage, imageContainer);
+  // Добавляем обработчик для пинча (но теперь не будет увеличиваться)
+  setupPinchToZoom(mainImage);
 
-  // Добавляем обработчик для перемещения изображения
+  // Добавляем обработчик для перетаскивания изображения
   setupDragToMove(mainImage, imageContainer);
 
-  // Добавляем поддержку масштабирования изображения колесиком мыши (для десктопа)
-  if (window.innerWidth > 768) {
-    // Только для десктопа
-    setupMouseWheelZoom(mainImage);
-  }
+  // Добавляем обработчик для колесика мыши для увеличения
+  mainImage.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    if (!isFullscreen) {
+      zoomImage(e); // Увеличение только если не в полноэкранном режиме
+    }
+  });
+
+  // Добавляем обработчик для перемещения точки увеличения
+  mainImage.addEventListener("mousemove", (e) => {
+    if (!isFullscreen) {
+      updateZoomPosition(e); // Обновляем точку увеличения
+    }
+  });
 }
 
 // Закрытие модалки
@@ -109,81 +110,117 @@ function closeModal() {
   const modal = document.getElementById("modal");
   modal.style.display = "none";
   document.body.style.overflow = "";
+
   exitFullscreen(); // Выйти из полноэкранного режима
-  document.removeEventListener("keydown", handleKeyboard); // Убираем обработчик клавиш
+
   resetImageScale(); // Сбросить масштаб изображения
 }
-// Добавьте обработчик событий на кнопку закрытия модалки
+
+// Добавляем обработчик для кнопки закрытия модалки
 document.getElementById("closeModal").addEventListener("click", closeModal);
+
+// Добавляем поддержку стрелок клавиатуры для переключения изображений
+document.addEventListener("keydown", (e) => {
+  const modal = document.getElementById("modal");
+  if (modal.style.display === "flex") {
+    if (e.key === "ArrowLeft") {
+      // Стрелка влево
+      changeImage(-1, currentItemImages);
+    } else if (e.key === "ArrowRight") {
+      // Стрелка вправо
+      changeImage(1, currentItemImages);
+    }
+  }
+});
 
 // Изменение изображения
 function changeImage(direction, images) {
   currentImageIndex =
     (currentImageIndex + direction + images.length) % images.length;
-  document.getElementById("mainImage").src = images[currentImageIndex];
+  const mainImage = document.getElementById("mainImage");
+  mainImage.src = images[currentImageIndex];
   resetImageScale(); // Сбросить масштаб изображения при смене
 }
 
-// Полноэкранный режим
+// Переключение в полноэкранный режим
 function toggleFullscreen() {
   const mainImage = document.getElementById("mainImage");
+
   if (!isFullscreen) {
-    if (mainImage.requestFullscreen) mainImage.requestFullscreen();
-    else if (mainImage.webkitRequestFullscreen)
+    // Переход в полноэкранный режим
+    if (mainImage.requestFullscreen) {
+      mainImage.requestFullscreen();
+    } else if (mainImage.webkitRequestFullscreen) {
       mainImage.webkitRequestFullscreen();
-    else if (mainImage.msRequestFullscreen) mainImage.msRequestFullscreen();
+    } else if (mainImage.msRequestFullscreen) {
+      mainImage.msRequestFullscreen();
+    }
+
     isFullscreen = true;
+    mainImage.style.transform = "scale(1)"; // Убедимся, что масштаб сброшен
+    mainImage.style.pointerEvents = "none"; // Блокируем взаимодействие с изображением
   } else {
+    // Выход из полноэкранного режима
     exitFullscreen();
     isFullscreen = false;
+    mainImage.style.pointerEvents = "auto"; // Восстанавливаем взаимодействие
   }
 }
 
+// Выход из полноэкранного режима
 function exitFullscreen() {
   if (document.exitFullscreen) document.exitFullscreen();
   else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
   else if (document.msExitFullscreen) document.msExitFullscreen();
 }
 
-// Обработка свайпов (только для переключения изображений)
+// Обработка свайпов для переключения изображений
 function setupImageGestures(mainImage, images) {
+  let touchStartX = 0;
+  let touchEndX = 0;
+
   mainImage.addEventListener("touchstart", (e) => {
     touchStartX = e.touches[0].clientX;
+  });
+
+  mainImage.addEventListener("touchmove", (e) => {
+    touchEndX = e.touches[0].clientX;
+  });
+
+  mainImage.addEventListener("touchend", () => {
+    const swipeDistance = touchStartX - touchEndX;
+    const swipeThreshold = 150; // Порог свайпа
+    if (swipeDistance > swipeThreshold) changeImage(1, images); // Свайп влево
+    if (swipeDistance < -swipeThreshold) changeImage(-1, images); // Свайп вправо
+  });
+}
+
+// Обработчик пинча (но без возможности увеличивать)
+function setupPinchToZoom(mainImage) {
+  let initialDistance = 0;
+
+  mainImage.addEventListener("touchstart", (e) => {
     if (e.touches.length === 2) {
-      isPinch = true; // Начинаем пинч
       initialDistance = getDistanceBetweenTouches([e.touches[0], e.touches[1]]);
     }
   });
 
   mainImage.addEventListener("touchmove", (e) => {
-    if (isPinch && e.touches.length === 2) {
-      // Только если два пальца, мы будем обрабатывать пинч
+    if (e.touches.length === 2) {
       const newDistance = getDistanceBetweenTouches([
         e.touches[0],
         e.touches[1],
       ]);
       const scaleChange = newDistance / initialDistance;
 
-      currentScale = Math.min(Math.max(currentScale * scaleChange, 1), 3); // Ограничиваем масштаб от 1x до 3x
-      mainImage.style.transform = `scale(${currentScale})`;
-
-      initialDistance = newDistance; // Обновляем начальное расстояние для дальнейших движений
-    } else if (e.touches.length === 1) {
-      // Обработка свайпов для одного пальца
-      touchEndX = e.touches[0].clientX;
+      // Применяем масштаб, но не даем увеличить
+      mainImage.style.transform = `scale(1)`; // Ограничиваем масштаб на 1
+      initialDistance = newDistance;
     }
   });
 
   mainImage.addEventListener("touchend", () => {
-    if (isPinch) {
-      isPinch = false; // Завершаем пинч
-      initialDistance = 0;
-    } else {
-      const swipeDistance = touchStartX - touchEndX;
-      const swipeThreshold = 150; // Увеличиваем порог для свайпа до 150 пикселей
-      if (swipeDistance > swipeThreshold) changeImage(1, images); // Свайп влево
-      if (swipeDistance < -swipeThreshold) changeImage(-1, images); // Свайп вправо
-    }
+    initialDistance = 0;
   });
 }
 
@@ -194,26 +231,13 @@ function getDistanceBetweenTouches(touches) {
   return Math.sqrt(xDist * xDist + yDist * yDist);
 }
 
-// Сбросить масштаб изображения
-function resetImageScale() {
-  const mainImage = document.getElementById("mainImage");
-  currentScale = 1;
-  mainImage.style.transform = "scale(1)";
-  mainImage.style.transition = "transform 0.3s ease"; // Плавное возвращение к нормальному масштабу
-  dragOffsetX = 0;
-  dragOffsetY = 0;
-  mainImage.style.left = "0px";
-  mainImage.style.top = "0px";
-}
-
 // Обработка перетаскивания изображения
 function setupDragToMove(mainImage, imageContainer) {
   let startX, startY;
   let isMoving = false;
 
   mainImage.addEventListener("touchstart", (e) => {
-    if (currentScale > 1) {
-      // Только если изображение увеличено
+    if (isFullscreen) {
       isMoving = true;
       startX = e.touches[0].clientX - dragOffsetX;
       startY = e.touches[0].clientY - dragOffsetY;
@@ -221,7 +245,7 @@ function setupDragToMove(mainImage, imageContainer) {
   });
 
   mainImage.addEventListener("touchmove", (e) => {
-    if (isMoving && currentScale > 1) {
+    if (isMoving) {
       const moveX = e.touches[0].clientX - startX;
       const moveY = e.touches[0].clientY - startY;
 
@@ -229,13 +253,12 @@ function setupDragToMove(mainImage, imageContainer) {
       const containerRect = imageContainer.getBoundingClientRect();
       const imageRect = mainImage.getBoundingClientRect();
 
-      // Двигаем изображение внутри контейнера, ограничиваем его движением
       dragOffsetX = Math.min(
-        Math.max(moveX, containerRect.width - imageRect.width * currentScale),
+        Math.max(moveX, containerRect.width - imageRect.width),
         0
       );
       dragOffsetY = Math.min(
-        Math.max(moveY, containerRect.height - imageRect.height * currentScale),
+        Math.max(moveY, containerRect.height - imageRect.height),
         0
       );
 
@@ -249,70 +272,42 @@ function setupDragToMove(mainImage, imageContainer) {
   });
 }
 
-// Управление клавишами
-function handleKeyboard(e) {
-  // Используем только изображения текущего блока, на котором открыта модалка
-  if (e.key === "ArrowLeft") changeImage(-1, currentItemImages);
-  if (e.key === "ArrowRight") changeImage(1, currentItemImages);
-  if (e.key === "Escape") closeModal();
-}
+// Функция для увеличения изображения
+function zoomImage(e) {
+  const mainImage = document.getElementById("mainImage");
 
-// Масштабирование изображения колесиком мыши (для десктопа)
-function setupMouseWheelZoom(mainImage) {
-  mainImage.addEventListener("wheel", (e) => {
-    if (e.deltaY < 0) {
-      // Увеличение
-      currentScale = Math.min(currentScale + 0.1, 3); // Ограничиваем масштаб от 1x до 3x
-    } else {
-      // Уменьшение
-      currentScale = Math.max(currentScale - 0.1, 1); // Ограничиваем масштаб от 1x до 3x
-    }
-
-    mainImage.style.transform = `scale(${currentScale})`;
-    e.preventDefault();
-  });
-}
-
-// Обработка жестов пинч для масштабирования
-function setupPinchToZoom(mainImage, imageContainer) {
-  mainImage.addEventListener("touchstart", (e) => {
-    touchStartX = e.touches[0].clientX;
-    if (e.touches.length === 2) {
-      isPinch = true; // Начинаем пинч
-      initialDistance = getDistanceBetweenTouches([e.touches[0], e.touches[1]]);
-    }
-  });
-
-  mainImage.addEventListener("touchmove", (e) => {
-    if (isPinch && e.touches.length === 2) {
-      const newDistance = getDistanceBetweenTouches([
-        e.touches[0],
-        e.touches[1],
-      ]);
-      const scaleChange = newDistance / initialDistance;
-
-      currentScale = Math.min(Math.max(currentScale * scaleChange, 1), 3); // Ограничиваем масштаб от 1x до 3x
-      mainImage.style.transform = `scale(${currentScale})`;
-
-      initialDistance = newDistance;
-    }
-  });
-
-  mainImage.addEventListener("touchend", () => {
-    if (isPinch) {
-      isPinch = false; // Завершаем пинч
-      initialDistance = 0;
-    }
-  });
-}
-
-// Открытие ссылки на YouTube
-function openYouTube(button) {
-  const youtubeLink = button.getAttribute("data-link"); // Получаем ссылку из атрибута
-  if (youtubeLink) {
-    window.open(youtubeLink, "_blank"); // Открываем ссылку в новой вкладке
+  // Изменение масштаба
+  if (e.deltaY < 0) {
+    zoomLevel += 0.1; // Увеличение
+  } else {
+    zoomLevel -= 0.1; // Уменьшение
   }
+
+  // Ограничиваем максимальный и минимальный масштаб
+  zoomLevel = Math.min(Math.max(zoomLevel, 1), 3);
+
+  // Применяем масштаб
+  mainImage.style.transform = `scale(${zoomLevel})`;
 }
 
-// Инициализация
+// Сброс масштаба изображения
+function resetImageScale() {
+  const mainImage = document.getElementById("mainImage");
+  zoomLevel = 1;
+  mainImage.style.transform = `scale(1)`; // Сбрасываем масштаб
+}
+
+// Обновление точки увеличения
+function updateZoomPosition(e) {
+  const mainImage = document.getElementById("mainImage");
+  const rect = mainImage.getBoundingClientRect();
+  const offsetX = e.clientX - rect.left;
+  const offsetY = e.clientY - rect.top;
+
+  mainImage.style.transformOrigin = `${(offsetX / rect.width) * 100}% ${
+    (offsetY / rect.height) * 100
+  }%`;
+}
+
+// Загрузка данных
 loadCatalogData();

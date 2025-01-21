@@ -129,12 +129,21 @@ main {
 .modal-main-image {
   max-height: 100%;
   max-width: 100%;
-
   object-fit: contain;
   cursor: pointer;
   transition: transform 0.3s ease;
   touch-action: none; /* Отключаем стандартное поведение для изображений */
   transform-origin: center center;
+  position: relative;
+}
+
+/* Для полноэкранного режима */
+.modal-main-image.fullscreen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  z-index: 1000;
 }
 
 /* Для десктопа */
@@ -212,24 +221,6 @@ main {
   }
 }
 
-/* Стили для скроллбара */
-/* .modal-gallery::-webkit-scrollbar {
-  height: 8px;
-}
-
-.modal-gallery::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
-}
-
-.modal-gallery::-webkit-scrollbar-thumb:hover {
-  background: #999;
-}
-
-.modal-gallery::-webkit-scrollbar-track {
-  background: #f1f1f1;
-} */
-
 /* Адаптивная сетка каталога */
 @media (max-width: 768px) {
   .catalog {
@@ -305,4 +296,17 @@ main {
 .arrow:hover {
   background: grey;
   color: #fff;
+}
+
+/* Стили для лупы */
+.zoom-lens {
+  position: absolute;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  cursor: crosshair;
+  width: 100px; /* Размер лупы */
+  height: 100px;
+  opacity: 0; /* По умолчанию лупа невидима */
+  pointer-events: none; /* Чтобы лупа не блокировала клики */
+  transition: opacity 0.2s;
 }
